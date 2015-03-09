@@ -326,6 +326,7 @@ module OpenShift
         # having the application's name and namespace in the monitor's name).
         if @monitor_name_format && @monitor_name_format.match(/%a/) && @monitor_name_format.match(/%n/)
           monitor_name = generate_monitor_name app_name, namespace
+          monitor_path = generate_monitor_path app_name, namespace
           unless monitor_name.nil? or monitor_name.empty? or monitor_path.nil? or monitor_path.empty?
             @logger.info "Deleting unused monitor: #{monitor_name}"
             # We pass pool_name to delete_monitor because some backends need the

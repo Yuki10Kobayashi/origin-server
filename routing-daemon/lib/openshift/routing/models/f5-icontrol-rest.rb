@@ -102,14 +102,15 @@ module OpenShift
 
     def create_monitor monitor_name, path, up_code, type, interval, timeout
       type = type == 'https-ecv' ? 'https' : 'http'
-      post(url: "https://#{@host}/mgmt/tm/ltm/monitor/#{type}/#{monitor_name}",
+      post(url: "https://#{@host}/mgmt/tm/ltm/monitor/#{type}",
            payload: {
+             "name" => monitor_name,
              "interval" => interval,
              "recv" => up_code,
              "send" => "HEAD #{path} HTTP/1.0\\r\\n\\r\\n",
              "timeout" => timeout,
              "upInterval" => interval,
-           })
+           }.to_json)
     end
 
     def delete_monitor monitor_name
